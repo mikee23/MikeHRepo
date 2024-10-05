@@ -1,0 +1,121 @@
+version: '3.4'
+
+networks:
+  backend:
+
+services:
+  photodb:
+       container_name: photo-db
+       image:  mcr.microsoft.com/mssql/server:2019-latest
+       environment:
+           - ACCEPT_EULA=Y
+           - SA_PASSWORD=P@ssword1234#
+       networks:
+           - backend
+       ports:
+           - 1433:1433
+  photowebapi:
+    container_name: photo-api
+    image: ${DOCKER_REGISTRY-}photowebapi
+    build:
+      context: .
+      dockerfile: PhotoWebApi/Dockerfile
+    networks:
+        - backend
+    ports:
+        - 8002:80
+    environment:
+        - DB_HOST=photodb
+        - DB_NAME=dms_photo
+        - DB_SA_PASSWORD=P@ssword1234#
+
+  albumdb:
+    container_name: album-db
+    image: mongo
+    ports:
+      - 18005:27017
+    networks:
+      - backend
+
+  albumwebapi:
+    container_name: album-api
+    image: ${DOCKER_REGISTRY-}albumwebapi
+    build:
+      context: .
+      dockerfile: AlbumWebApi/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 8004:80
+    environment:
+      - DB_HOST=albumdb
+      - DB_NAME=dms_album
+
+  roledb:
+    container_name: role-db
+    image: mysql:8.0.29-oracle
+    environment:
+     - MYSQL_ROOT_PASSWORD=test123@
+    ports:
+     - 18004:3306
+    networks:
+     - backend
+
+  rolewebapi:
+    container_name: role-api
+    image: ${DOCKER_REGISTRY-}rolewebapi
+    build:
+      context: .
+      dockerfile: RoleWebApi/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 8005:80
+    environment:
+      - DB_HOST=roledb
+      - DB_NAME=dms_role
+      - DB_ROOT_PASSWORD=test123@
+
+  memberdb:
+    container_name: member-db
+    image: mongo
+    ports:
+      - 18006:27017
+    networks:
+      - backend
+
+  memberwebapi:
+    container_name: member-api
+    image: ${DOCKER_REGISTRY-}memberwebapi
+    build:
+      context: .
+      dockerfile: MemberWebApi/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 8007:80
+    environment:
+      - DB_HOST=memberdb
+      - DB_NAME=dms_member
+
+  apigateway:
+    container_name: api-gateway
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - 8001:80
+    networks:
+      - backend
+
+
+  authenticationwebapi:
+    container_name: authetication-api
+    image: ${DOCKER_REGISTRY-}authenticationwebapi
+    build:
+      context: .
+      dockerfile: AuthenticationWebApi/Dockerfile
+    networks:
+    - backend
+

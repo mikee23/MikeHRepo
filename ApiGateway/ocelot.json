@@ -1,0 +1,122 @@
+{
+  "Routes": [
+    // Authentication Web API
+    {
+      "UpstreamPathTemplate": "/api/Account",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authenticationwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Account"
+    },
+    // Photo Web API
+    {
+      "UpstreamPathTemplate": "/Photo",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "photowebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Photo"
+    },
+    {
+      "UpstreamPathTemplate": "/Photo/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "photowebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Photo/{id}"
+    },
+
+    //Album Web API
+    {
+      "UpstreamPathTemplate": "/api/Album",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "albumwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Album"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Album/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "albumwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Album/{id}"
+    },
+
+    //Role Web API
+    {
+      "UpstreamPathTemplate": "/api/Role",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "rolewebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Role"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Role/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "rolewebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Role/{id}"
+    },
+    // Member Web API
+    {
+      "UpstreamPathTemplate": "/api/Member",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "memberwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Member"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Member/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "memberwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Member/{id}"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8001"
+  }
+}
